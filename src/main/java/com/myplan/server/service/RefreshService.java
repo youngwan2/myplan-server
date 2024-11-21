@@ -66,8 +66,8 @@ public class RefreshService {
         //  refresh 토큰을 사용해서 access 토큰 재발급
         String username = jwtUtil.getUsername(refresh);
         String role = jwtUtil.getRole(refresh);
-        String newAccess = jwtUtil.createJwtToken(username, role, 60 * 10L, "access");
-        String newRefresh = jwtUtil.createJwtToken(username, role, 60 * 60 * 24 * 30L, "refresh");
+        String newAccess = jwtUtil.createJwtToken(username, role, 60 * 60 * 10 * 1000L, "access"); // 10시간
+        String newRefresh = jwtUtil.createJwtToken(username, role, 60 * 60 * 24 * 30 * 1000L, "refresh"); // 30일
 
 
         // 응답

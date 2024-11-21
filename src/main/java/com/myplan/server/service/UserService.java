@@ -2,6 +2,7 @@ package com.myplan.server.service;
 
 import com.myplan.server.dto.UserDTO;
 import com.myplan.server.dto.UserInfoDTO;
+import com.myplan.server.exception.NotFound;
 import com.myplan.server.exception.UserAlreadyExistsException;
 import com.myplan.server.exception.UserNotFoundException;
 import com.myplan.server.model.Member;
@@ -23,6 +24,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final RefreshService refreshService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // 회원유무
+    public boolean existsUser(Long id){
+       userRepository.findById(id).orElseThrow(()-> new NotFound("User wasn't found"));
+       return true;
+    }
 
     // 회원정보 조회
     public UserInfoDTO getUsers(String username) {

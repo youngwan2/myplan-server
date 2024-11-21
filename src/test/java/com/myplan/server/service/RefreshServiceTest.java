@@ -28,7 +28,6 @@ public class RefreshServiceTest {
     @Test
     void removeRefresh_ShouldThrowException_WhenRefreshTokenIsNotFound(){
 
-
         // Given
         String refresh = null;
         String username = "test11";

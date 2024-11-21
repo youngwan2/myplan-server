@@ -15,6 +15,7 @@ public class GlobalException extends RuntimeException {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    // Not Found 예외 전역 처리
     @ExceptionHandler(NotFound.class)
     public ResponseEntity<String> handleNotFoundException(NotFound ex){
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
