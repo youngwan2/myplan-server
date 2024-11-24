@@ -3,7 +3,7 @@ package com.myplan.server.controller;
 import com.myplan.server.config.response.ApiResponse;
 import com.myplan.server.dto.PasswordUpdateRequestDTO;
 import com.myplan.server.dto.UserDTO;
-import com.myplan.server.exception.UserAlreadyExistsException;
+import com.myplan.server.exception.AlreadyExistsException;
 import com.myplan.server.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class UserController {
             userService.registerUser(userDTO);
             return ApiResponse.success("회원가입 성공", HttpStatus.CREATED);
 
-        } catch (UserAlreadyExistsException ex) {
+        } catch (AlreadyExistsException ex) {
             log.error("User registration failed: {}", ex.getMessage());
             return ApiResponse.error("이미 존재하는 유저 입니다.", HttpStatus.BAD_REQUEST);
         }

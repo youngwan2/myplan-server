@@ -28,10 +28,11 @@ public class ApiResponse<T> {
     }
 
     // 성공 응답을 ResponseEntity로 반환
-    public static <T> ResponseEntity<ApiResponse<T>> success(T data, String message) {
-        ApiResponse<T> response = new ApiResponse<>(data, message, HttpStatus.OK);
+    public static <T> ResponseEntity<ApiResponse<T>> success(T data, String message, HttpStatus httpStatus) {
+        ApiResponse<T> response = new ApiResponse<>(data, message, httpStatus);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     public static ResponseEntity<ApiResponse<Void>> success(String message, HttpStatus httpStatus) {
         ApiResponse<Void> response = new ApiResponse<>(message, httpStatus);

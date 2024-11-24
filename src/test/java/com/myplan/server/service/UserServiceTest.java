@@ -1,7 +1,7 @@
 package com.myplan.server.service;
 
 import com.myplan.server.dto.UserDTO;
-import com.myplan.server.exception.UserAlreadyExistsException;
+import com.myplan.server.exception.AlreadyExistsException;
 import com.myplan.server.exception.UserNotFoundException;
 import com.myplan.server.model.Member;
 import com.myplan.server.repository.UserRepository;
@@ -12,8 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,7 +75,7 @@ class UserServiceTest {
         when(userRepository.existsByUsername(userDTO.getUsername())).thenReturn(true);
 
         // When & Then
-        assertThrows(UserAlreadyExistsException.class, () -> userService.registerUser(userDTO));
+        assertThrows(AlreadyExistsException.class, () -> userService.registerUser(userDTO));
 
         verify(userRepository).existsByUsername("existinguser");
         verify(userRepository, never()).existsByEmail(anyString());
@@ -96,7 +94,7 @@ class UserServiceTest {
         when(userRepository.existsByEmail(userDTO.getEmail())).thenReturn(true);
 
         // When & Then
-        assertThrows(UserAlreadyExistsException.class, () -> userService.registerUser(userDTO));
+        assertThrows(AlreadyExistsException.class, () -> userService.registerUser(userDTO));
 
         verify(userRepository).existsByUsername("newuser");
         verify(userRepository).existsByEmail("existing@example.com");

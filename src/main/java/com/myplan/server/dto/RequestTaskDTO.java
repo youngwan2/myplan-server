@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TaskDTO {
+public class RequestTaskDTO {
 
     @NotNull(message = "제목은 비어있으면 안 됩니다.")
     @Size(min =2, max = 20, message = "제목은 최소 2자 이상 최대 20자 이하이어야 합니다.")
@@ -22,10 +22,10 @@ public class TaskDTO {
     private String description;
     private String colorCode;
 
-    @NotNull(message = "시작시간은 비어 있으면 안 됩니다.")
     private LocalTime startTime;
-    @NotNull(message = "종료시간은 비어 있으면 안 됩니다.")
     private LocalTime endTime;
+
+    private Long planId;
 
     @Override
     public String toString() {

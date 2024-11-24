@@ -5,6 +5,7 @@ import com.myplan.server.dto.UserInfoDTO;
 import com.myplan.server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class HomeController {
     @GetMapping("/")
     public ResponseEntity<ApiResponse<UserInfoDTO>> home(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserInfoDTO userInfoDTO= userService.getUsers(username);
-        return ApiResponse.success(userInfoDTO, "success") ;
+        UserInfoDTO userInfoDTO= userService.getUsersByUsername(username);
+        return ApiResponse.success(userInfoDTO, "성공적으로 조회되었습니다.", HttpStatus.OK) ;
     }
 }

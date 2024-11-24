@@ -2,20 +2,15 @@ package com.myplan.server.service;
 
 import com.myplan.server.dto.UserDTO;
 import com.myplan.server.dto.UserInfoDTO;
+import com.myplan.server.exception.AlreadyExistsException;
 import com.myplan.server.exception.NotFound;
-import com.myplan.server.exception.UserAlreadyExistsException;
 import com.myplan.server.exception.UserNotFoundException;
 import com.myplan.server.model.Member;
 import com.myplan.server.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -31,8 +26,13 @@ public class UserService {
        return true;
     }
 
-    // 회원정보 조회
-    public UserInfoDTO getUsers(String username) {
+    // 회원정보 조회(전체- 외래키 관계 설정용)
+    public Member getUsersById(Long id){
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User Id is Not Found: "+ id));
+    }
+
+    // 회원정보 조회(일부- 사용자 응답)
+    public UserInfoDTO getUsersByUsername(String username) {
         Member user = userRepository.findByUsername(username);
 
         UserInfoDTO userInfoDTO = new UserInfoDTO();
@@ -50,10 +50,10 @@ public class UserService {
     public Member registerUser(UserDTO userDto) {
 
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            throw new UserAlreadyExistsException("이미 존재하는 유저 이름 입니다.");
+            throw new AlreadyExistsException("이미 존재하는 유저 이름 입니다.");
         }
         if (userRepository.existsByEmail(userDto.getEmail())) {
-            throw new UserAlreadyExistsException("이미 존재하는 유저 이메일 입니다.");
+            throw new AlreadyExistsException("이미 존재하는 유저 이메일 입니다.");
         }
 
         Member user = Member.builder()
