@@ -1,4 +1,4 @@
-package com.myplan.server.dto;
+package com.myplan.server.dto.auth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Setter
 @Getter
-public class UserInfoDTO {
+public class ResponseUserDTO {
 
     private Long id;
     private String email;

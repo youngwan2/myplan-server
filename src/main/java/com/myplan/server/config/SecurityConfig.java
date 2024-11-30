@@ -2,7 +2,7 @@ package com.myplan.server.config;
 
 import com.myplan.server.jwt.CustomLogoutFilter;
 import com.myplan.server.jwt.JwtFilter;
-import com.myplan.server.jwt.JwtUtil;
+import com.myplan.server.util.JwtUtil;
 import com.myplan.server.jwt.LoginFilter;
 import com.myplan.server.repository.RefreshRepository;
 import com.myplan.server.service.RefreshService;

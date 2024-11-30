@@ -1,6 +1,6 @@
 package com.myplan.server.service;
 
-import com.myplan.server.dto.UserDTO;
+import com.myplan.server.dto.auth.RequestUserDTO;
 import com.myplan.server.exception.AlreadyExistsException;
 import com.myplan.server.exception.UserNotFoundException;
 import com.myplan.server.model.Member;
@@ -40,7 +40,7 @@ class UserServiceTest {
     @Test
     void registerUser_ShouldRegisterUser_WhenUserDoesNotExist() {
         // Given
-        UserDTO userDTO = new UserDTO();
+        RequestUserDTO userDTO = new RequestUserDTO();
         userDTO.setUsername("newuser");
         userDTO.setPassword("password");
         userDTO.setEmail("newuser@example.com");
@@ -67,7 +67,7 @@ class UserServiceTest {
     @Test
     void registerUser_ShouldThrowException_WhenUsernameAlreadyExists() {
         // Given
-        UserDTO userDTO = new UserDTO();
+        RequestUserDTO userDTO = new RequestUserDTO();
         userDTO.setUsername("existinguser");
         userDTO.setPassword("password");
         userDTO.setEmail("user@example.com");
@@ -85,7 +85,7 @@ class UserServiceTest {
     @Test
     void registerUser_ShouldThrowException_WhenEmailAlreadyExists() {
         // Given
-        UserDTO userDTO = new UserDTO();
+        RequestUserDTO userDTO = new RequestUserDTO();
         userDTO.setUsername("newuser");
         userDTO.setPassword("password");
         userDTO.setEmail("existing@example.com");

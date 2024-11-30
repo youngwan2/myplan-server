@@ -1,6 +1,6 @@
 package com.myplan.server.service;
 
-import com.myplan.server.dto.RequestTaskDTO;
+import com.myplan.server.dto.task.RequestTaskDTO;
 import com.myplan.server.exception.AlreadyExistsException;
 import com.myplan.server.model.Plan;
 import com.myplan.server.model.Task;

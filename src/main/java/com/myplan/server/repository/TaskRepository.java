@@ -1,6 +1,6 @@
 package com.myplan.server.repository;
 
-import com.myplan.server.dto.ResponseTaskDTO;
+import com.myplan.server.dto.task.ResponseTaskDTO;
 import com.myplan.server.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Query("SELECT new com.myplan.server.dto.ResponseTaskDTO(e.id, e.title, e.description, e.startTime, e.endTime, e.colorCode) " +
+    @Query("SELECT new com.myplan.server.dto.task.ResponseTaskDTO(e.id, e.title, e.description, e.startTime, e.endTime, e.colorCode) " +
             "FROM Task e WHERE e.id = :taskId")
     ResponseTaskDTO findResponseTaskById(@Param("taskId") Long taskId);
 
-    @Query("SELECT new com.myplan.server.dto.ResponseTaskDTO(e.id, e.title, e.description, e.startTime, e.endTime, e.colorCode) " +
+    @Query("SELECT new com.myplan.server.dto.task.ResponseTaskDTO(e.id, e.title, e.description, e.startTime, e.endTime, e.colorCode) " +
             "FROM Task e WHERE e.id = :taskId")
     List<ResponseTaskDTO> findAllResponseTaskById(@Param("taskId") Long taskId);
 

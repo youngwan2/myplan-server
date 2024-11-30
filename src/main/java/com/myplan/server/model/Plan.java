@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class) // 계정생성 및 수정 날짜 자동 관리 위해
@@ -25,6 +27,9 @@ public class Plan {
 
     @Column(nullable = false)
     private LocalDate planDate;
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 
     @CreatedDate
     @Column(updatable = false)

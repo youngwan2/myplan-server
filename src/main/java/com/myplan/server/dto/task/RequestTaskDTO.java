@@ -1,4 +1,4 @@
-package com.myplan.server.dto;
+package com.myplan.server.dto.task;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,6 +1,6 @@
 package com.myplan.server.service;
 
-import com.myplan.server.exception.NotFound;
+import com.myplan.server.exception.NotFoundException;
 import com.myplan.server.repository.RefreshRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class RefreshServiceTest {
 
@@ -33,6 +32,6 @@ public class RefreshServiceTest {
         String username = "test11";
 
         //When & Then
-        assertThrows(NotFound.class, ()-> refreshService.removeRefresh(username));
+        assertThrows(NotFoundException.class, ()-> refreshService.removeRefresh(username));
     }
 }

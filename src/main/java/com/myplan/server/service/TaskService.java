@@ -1,9 +1,9 @@
 package com.myplan.server.service;
 
-import com.myplan.server.dto.ResponseTaskDTO;
-import com.myplan.server.dto.RequestTaskDTO;
+import com.myplan.server.dto.task.ResponseTaskDTO;
+import com.myplan.server.dto.task.RequestTaskDTO;
 import com.myplan.server.exception.AlreadyExistsException;
-import com.myplan.server.exception.NotFound;
+import com.myplan.server.exception.NotFoundException;
 import com.myplan.server.model.Plan;
 import com.myplan.server.model.Task;
 import com.myplan.server.repository.TaskRepository;
@@ -56,6 +56,7 @@ public class TaskService {
     @Transactional
     public ResponseTaskDTO addTask(Long planId, RequestTaskDTO requestTaskDTO) {
 
+
         // 작업 겹침 유효성
         if (isExistsTask(planId, requestTaskDTO.getStartTime(), requestTaskDTO.getEndTime())) {
             throw new AlreadyExistsException(requestTaskDTO.getStartTime() + " ~ " + requestTaskDTO.getEndTime() + " 까지의 작업은 이미 등록되었습니다.");
@@ -66,8 +67,9 @@ public class TaskService {
             throw new IllegalArgumentException("Start Time 과 End Time 은 최소 1분 이상 차이가 있어야 합니다.");
         }
 
+
         if (!planService.existsById(planId)) {
-            throw new NotFound(planId + "로 등록된 Plan 이 존재하지 않습니다.");
+            throw new NotFoundException(planId + "로 등록된 Plan 이 존재하지 않습니다.");
         }
         Plan plan = planService.findById(planId);
         Task task = Task.builder()
@@ -107,7 +109,7 @@ public class TaskService {
         if (updatedRowCnt == 0) {
             throw new IllegalArgumentException("해당 Task ID 로 변경된 데이터가 " + updatedRowCnt + "건 입니다.");
         }
-        Task newTask = taskRepository.findById(taskId).orElseThrow(() -> new NotFound("해당 ID의 Task를 찾을 수 없습니다."));
+        Task newTask = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("해당 ID의 Task를 찾을 수 없습니다."));
         return ResponseTaskDTO.builder()
                 .id(newTask.getId())
                 .title(newTask.getTitle())

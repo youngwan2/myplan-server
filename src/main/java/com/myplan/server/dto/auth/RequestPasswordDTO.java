@@ -1,4 +1,4 @@
-package com.myplan.server.dto;
+package com.myplan.server.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class PasswordUpdateRequestDTO {
+public class RequestPasswordDTO {
 
     @NotBlank(message = "비밀번호는 필수 항목 입니다.")
     @Size(min = 8, max = 20, message = "비밀번호는 8자에서 20자 사이여야 합니다.")

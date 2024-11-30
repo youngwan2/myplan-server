@@ -1,7 +1,7 @@
 package com.myplan.server.controller;
 
 import com.myplan.server.config.response.ApiResponse;
-import com.myplan.server.dto.UserInfoDTO;
+import com.myplan.server.dto.auth.ResponseUserDTO;
 import com.myplan.server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,9 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<ApiResponse<UserInfoDTO>> home(){
+    public ResponseEntity<ApiResponse<ResponseUserDTO>> home(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserInfoDTO userInfoDTO= userService.getUsersByUsername(username);
+        ResponseUserDTO userInfoDTO= userService.getUsersByUsername(username);
         return ApiResponse.success(userInfoDTO, "성공적으로 조회되었습니다.", HttpStatus.OK) ;
     }
 }

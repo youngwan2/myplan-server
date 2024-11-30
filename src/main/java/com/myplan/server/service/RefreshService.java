@@ -1,8 +1,8 @@
 package com.myplan.server.service;
 
 import com.myplan.server.exception.InvalidTokenException;
-import com.myplan.server.exception.NotFound;
-import com.myplan.server.jwt.JwtUtil;
+import com.myplan.server.exception.NotFoundException;
+import com.myplan.server.util.JwtUtil;
 import com.myplan.server.model.Refresh;
 import com.myplan.server.repository.RefreshRepository;
 import com.myplan.server.util.CookieUtil;
@@ -24,7 +24,7 @@ public class RefreshService {
     public void removeRefresh(String username) {
         Refresh refresh = refreshRepository.findOneByUsername(username);
 
-        if(refresh == null) throw new NotFound("Refresh is not found");
+        if(refresh == null) throw new NotFoundException("Refresh is not found");
 
         cookieUtil.deleteCookie("refresh", null); // 쿠키 삭제
         refreshRepository.deleteAllByUsername(username); // DB 삭제

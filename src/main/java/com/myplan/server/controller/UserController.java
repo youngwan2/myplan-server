@@ -1,8 +1,8 @@
 package com.myplan.server.controller;
 
 import com.myplan.server.config.response.ApiResponse;
-import com.myplan.server.dto.PasswordUpdateRequestDTO;
-import com.myplan.server.dto.UserDTO;
+import com.myplan.server.dto.auth.RequestPasswordDTO;
+import com.myplan.server.dto.auth.RequestUserDTO;
 import com.myplan.server.exception.AlreadyExistsException;
 import com.myplan.server.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<Void>> registerUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<ApiResponse<Void>> registerUser(@Valid @RequestBody RequestUserDTO userDTO) {
         try {
             userService.registerUser(userDTO);
             return ApiResponse.success("회원가입 성공", HttpStatus.CREATED);
@@ -57,7 +57,7 @@ public class UserController {
 
     // 비밀번호 수정
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> patchUser(@PathVariable("id") Long id, @Valid @RequestBody PasswordUpdateRequestDTO passwordDTO) {
+    public ResponseEntity<ApiResponse<Void>> patchUser(@PathVariable("id") Long id, @Valid @RequestBody RequestPasswordDTO passwordDTO) {
             userService.updateUser(id, passwordDTO.getPassword());
             return ApiResponse.success("정상적으로 수정되었습니다.", HttpStatus.NO_CONTENT);
     }

@@ -1,4 +1,4 @@
-package com.myplan.server.dto;
+package com.myplan.server.dto.auth;
 
 
 import jakarta.validation.constraints.Email;
@@ -14,7 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LoginRequestDTO {
+public class RequestUserDTO {
+
+    @Size(min = 3, max = 15, message="name은 최소 3자 이상 15자 이하 이어야 합니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$", message = "name 은 알파벳(소/대문자), 숫자만 포함되어야 합니다.")
+    private String username;
 
     @NotBlank(message = "email 은 필수 입력값 입니다.")
     @Email(message = "유효한 이메일 형식이 아닙니다. test12@naver.com 와 같이 유효한 형식이어야 합니다.")

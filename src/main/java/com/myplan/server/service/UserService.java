@@ -1,12 +1,12 @@
 package com.myplan.server.service;
 
-import com.myplan.server.dto.UserDTO;
-import com.myplan.server.dto.UserInfoDTO;
+import com.myplan.server.dto.auth.RequestUserDTO;
+import com.myplan.server.dto.auth.ResponseUserDTO;
 import com.myplan.server.exception.AlreadyExistsException;
-import com.myplan.server.exception.NotFound;
 import com.myplan.server.exception.UserNotFoundException;
 import com.myplan.server.model.Member;
 import com.myplan.server.repository.UserRepository;
+import com.myplan.server.util.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,23 +19,29 @@ public class UserService {
     private final UserRepository userRepository;
     private final RefreshService refreshService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationFacade authenticationFacade;
 
     // 회원유무
-    public boolean existsUser(Long id){
-       userRepository.findById(id).orElseThrow(()-> new NotFound("User wasn't found"));
-       return true;
+    public boolean existsUser(Long id) {
+        return userRepository.existsById(id);
     }
 
     // 회원정보 조회(전체- 외래키 관계 설정용)
-    public Member getUsersById(Long id){
-        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User Id is Not Found: "+ id));
+    public Member getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("해당 ID 를 가진 사용자를 찾을 수 없습니다: " + id));
+    }
+
+    // 회원 ID 조회
+    public Long getUserIdByUsername() {
+        String username = authenticationFacade.getCurrentUsername();
+        return userRepository.findIdByUsername(username);
     }
 
     // 회원정보 조회(일부- 사용자 응답)
-    public UserInfoDTO getUsersByUsername(String username) {
+    public ResponseUserDTO getUsersByUsername(String username) {
         Member user = userRepository.findByUsername(username);
 
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        ResponseUserDTO userInfoDTO = new ResponseUserDTO();
         userInfoDTO.setId(user.getId());
         userInfoDTO.setEmail(user.getEmail());
         userInfoDTO.setUsername(username);
@@ -47,7 +53,7 @@ public class UserService {
     }
 
     // 회원가입
-    public Member registerUser(UserDTO userDto) {
+    public Member registerUser(RequestUserDTO userDto) {
 
         if (userRepository.existsByUsername(userDto.getUsername())) {
             throw new AlreadyExistsException("이미 존재하는 유저 이름 입니다.");

@@ -3,6 +3,7 @@ package com.myplan.server.jwt;
 import com.myplan.server.exception.InvalidTokenException;
 import com.myplan.server.model.Member;
 import com.myplan.server.service.RefreshService;
+import com.myplan.server.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // 토큰 만료시간 체크
         String token = extractToken(authorization);
         if (jwtUtil.isExp(token)) {
-            log.info("Token has expired, so we will use the refresh token to issue a new token");
+            log.info("access 토큰이 만료되었기에 refresh 토큰을 사용하여 새 토큰을 생성합니다.");
             String newAccessToken = handleExpiredAccessToken(request, response);
             if (newAccessToken == null) return;
         }
@@ -49,7 +50,8 @@ public class JwtFilter extends OncePerRequestFilter {
         // 토큰으로 자격증명 객체 생성 후 저장
         Authentication authentication = createAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("AccessToken successfully created");
+
+        log.info("Auth O");
         filterChain.doFilter(request, response);
     }
 

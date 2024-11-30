@@ -1,4 +1,4 @@
-package com.myplan.server.jwt;
+package com.myplan.server.util;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;

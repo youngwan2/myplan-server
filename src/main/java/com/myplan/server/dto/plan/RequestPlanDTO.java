@@ -1,4 +1,4 @@
-package com.myplan.server.dto;
+package com.myplan.server.dto.plan;
 
 
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PlanDTO {
+public class RequestPlanDTO {
 
     @NotNull
     private LocalDate planDate;
