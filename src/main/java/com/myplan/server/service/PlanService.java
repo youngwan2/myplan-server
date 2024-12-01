@@ -25,7 +25,6 @@ public class PlanService {
     private final AuthenticationFacade authenticationFacade;
 
 
-
     // 기간별 조회
     public List<ResponsePlanDTO> findPlanByDateRange(int month) {
 
@@ -41,6 +40,7 @@ public class PlanService {
     public ResponsePlanDTO addPlan(RequestPlanDTO planDTO) {
 
         Long memberId = getCurrentMemberId();
+
         if (memberId == null) {
             throw new IllegalArgumentException("유저의 ID 가 null 입니다.");
         }
@@ -67,8 +67,8 @@ public class PlanService {
     }
 
     // 특정 틀린 조회 : id
-    public Plan findById(Long planId){
-         return planRepository.findById(planId).orElseThrow(()-> new NotFoundException("현재하지 않는 plan 입니다."));
+    public Plan findById(Long planId) {
+        return planRepository.findById(planId).orElseThrow(() -> new NotFoundException("현재하지 않는 plan 입니다."));
     }
 
     // 특정 플랜 조회 : 날짜
